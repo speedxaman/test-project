@@ -174,15 +174,15 @@
                             <!-- Table Rows -->
                             <div class="divide-y">
                                 <div *ngFor="let app of filteredApplicationGroups"
-                                    class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50">
+                                    class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 ">
                                     <div class="col-span-4 font-medium text-gray-800">{{ app.name }}</div>
-                                    <div class="col-span-3 flex items-center space-x-2">
-                                        <button (click)="openIdleConfigModal(app)"
-                                            class="text-gray-700 hover:text-teal-600 hover:underline cursor-pointer">
+                                    <div class="col-span-3 flex items-center space-x-2 group">
+                                        <span
+                                            class="text-gray-700 hover:text-teal-600 cursor-pointer ">
                                             {{ app.idleTimeConfig }}
-                                        </button>
+                                        </span>
                                         <button (click)="openIdleConfigModal(app)"
-                                            class="text-teal-400 hover:text-teal-600">
+                                            class="text-teal-400 hover:text-teal-600 hidden group-hover:inline-block">
                                             📝
                                         </button>
                                     </div>
@@ -308,5 +308,5 @@
       <button class="fixed bottom-6 right-6 w-12 h-12 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 flex items-center justify-center">
         ❓
       </button> -->
+      <router-outlet />
 </div>
-<router-outlet />
