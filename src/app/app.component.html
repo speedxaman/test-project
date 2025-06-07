@@ -1,0 +1,312 @@
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">⚡</span>
+                </div>
+                <span class="text-xl font-semibold text-gray-800">Productivity Monitor</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-600 hover:text-gray-800">Customer Success</button>
+                <button class="flex items-center space-x-2 text-gray-600 hover:text-gray-800">
+                    <span>📥</span>
+                    <span>Download Agent</span>
+                </button>
+                <button class="text-gray-600 hover:text-gray-800">⚙️</button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-800">btrak</div>
+                        <div class="text-xs text-gray-500">{{'btrak10039-qa@gmail.com'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-16 bg-white shadow-sm border-r min-h-screen">
+            <nav class="py-4">
+                <div class="space-y-2">
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">📊</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">📈</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">👥</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">💻</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">📱</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">⏰</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">📋</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">👤</button>
+                    <button class="w-full p-3 text-gray-400 hover:text-teal-500 hover:bg-teal-50">✉️</button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+            <!-- Top Navigation -->
+            <div class="bg-white border-b">
+                <div class="px-6 py-0">
+                    <div class="flex items-center space-x-8">
+                        <button
+                            class="flex items-center space-x-2 text-teal-400 border-b-2 border-teal-400 pb-4 pt-4 font-medium">
+                            <span>📈</span>
+                            <span>Trends</span>
+                        </button>
+                        <button class="flex items-center space-x-2 text-teal-400 pb-4 pt-4">
+                            <span>🕐</span>
+                            <span>Time Line</span>
+                        </button>
+                        <button
+                            class="flex items-center space-x-2 bg-teal-400 text-white px-4 py-2 rounded-lg font-medium">
+                            <span>⚙️</span>
+                            <span>Configure Apps</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Navigation -->
+            <div class="bg-white border-b">
+                <div class="px-6">
+                    <div class="flex space-x-8">
+                        <button class="text-teal-400 border-b-2 border-teal-400 pb-4 pt-4 font-medium">Productivity
+                            Profile</button>
+                        <button class="text-gray-500 hover:text-gray-700 pb-4 pt-4">Mapping</button>
+                        <button class="text-gray-500 hover:text-gray-700 pb-4 pt-4">Application Groups</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6">
+                <div class="flex space-x-8">
+                    <!-- Left Panel - Custom Groups -->
+                    <div class="w-80">
+                        <div class="bg-white rounded-lg shadow-sm border">
+                            <div class="p-4 border-b">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-medium text-gray-800">Custom Groups</h3>
+                                    <button (click)="showAddGroupModal = true"
+                                        class="w-8 h-8 bg-teal-400 text-white rounded flex items-center justify-center hover:bg-teal-500">
+                                        +
+                                    </button>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" placeholder="Search" [(ngModel)]="groupSearchQuery"
+                                        class="w-full pl-6 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                                    <!-- <div class="absolute left-3 top-2.5 text-gray-400">🔍</div> -->
+                                </div>
+                            </div>
+                            <div class="p-4 space-y-2">
+                                <div class="flex items-center justify-between p-2 bg-teal-50 rounded">
+                                    <span class="text-sm font-medium text-teal-700">Default</span>
+                                    <span class="text-xs bg-teal-100 text-teal-600 px-2 py-1 rounded"
+                                        title="This productivity profile applies organization-wide. Teams with no assigned productivity profile will be tracked using the default productivity profile, while assigned teams will follow their designated productivity profile's configuration.">ℹ️</span>
+                                </div>
+                                @if (!this.groupSearchQuery) {
+                                <div *ngFor="let group of customGroups"
+                                    class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+                                    <span class="text-sm text-gray-700">{{ group.name }}</span>
+                                    <div class="flex space-x-1">
+                                        <button (click)="editCustomGroup(group)"
+                                            class="text-gray-400 hover:text-gray-600">📝</button>
+                                        <button (click)="deleteCustomGroup(group.id)"
+                                            class="text-gray-400 hover:text-red-500">🚮</button>
+                                    </div>
+                                </div>
+                                }
+
+                            </div>
+                            @if (this.groupSearchQuery) {
+                            <div class="p-4 space-y-2">
+                                <div *ngFor="let group of filteredCustomGroups"
+                                    class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+                                    <span class="text-sm text-gray-700">{{ group.name }}</span>
+                                    <div class="flex space-x-1">
+                                        <button (click)="editCustomGroup(group)"
+                                            class="text-gray-400 hover:text-gray-600">📝</button>
+                                        <button (click)="deleteCustomGroup(group.id)"
+                                            class="text-gray-400 hover:text-red-500">🚮</button>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <!-- Right Panel - Application Groups -->
+                    <div class="flex-1">
+                        <div class="bg-white rounded-lg shadow-sm border">
+                            <!-- Tab Navigation -->
+                            <div class="border-b">
+                                <div class="flex space-x-8 px-6">
+                                    <button
+                                        class="text-teal-400 border-b-2 border-teal-400 pb-4 pt-4 font-medium">Application
+                                        Groups</button>
+                                    <button class="text-gray-500 hover:text-gray-700 pb-4 pt-4">Teams</button>
+                                    <button class="text-gray-500 hover:text-gray-700 pb-4 pt-4">Users</button>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Table Header -->
+                            <div
+                                class="grid grid-cols-12 gap-4 px-6 bg-gray-50 font-medium text-sm text-gray-600 border-b">
+                                <div class="col-span-4 flex items-center justify-between">Application Group</div>
+                                <div class="col-span-4 flex items-center justify-between">Idle Time Configuration</div>
+                                <div class="col-span-4">
+                                    <!-- Search Bar -->
+                                    <div class="p-4 border-b flex justify-end">
+                                        <div class="relative max-w-md">
+                                            <input type="text" placeholder="Search" [(ngModel)]="appSearchQuery"
+                                                class="w-full pl-6 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400">
+                                            <!-- <div class="absolute left-3 top-2.5 text-gray-400">🔍</div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Table Rows -->
+                            <div class="divide-y">
+                                <div *ngFor="let app of filteredApplicationGroups"
+                                    class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50">
+                                    <div class="col-span-4 font-medium text-gray-800">{{ app.name }}</div>
+                                    <div class="col-span-3 flex items-center space-x-2">
+                                        <button (click)="openIdleConfigModal(app)"
+                                            class="text-gray-700 hover:text-teal-600 hover:underline cursor-pointer">
+                                            {{ app.idleTimeConfig }}
+                                        </button>
+                                        <button (click)="openIdleConfigModal(app)"
+                                            class="text-teal-400 hover:text-teal-600">
+                                            📝
+                                        </button>
+                                    </div>
+                                    <div class="col-span-5 flex justify-end">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                [class]="app.isProductive ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'"
+                                                (click)="toggleProductivity(app.id, true)"
+                                                class="px-3 py-1 rounded text-sm font-medium transition-colors">
+                                                PRODUCTIVE
+                                            </button>
+                                            <button
+                                                [class]="!app.isProductive ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-700'"
+                                                (click)="toggleProductivity(app.id, false)"
+                                                class="px-3 py-1 rounded text-sm font-medium transition-colors">
+                                                NON-PRODUCTIVE
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idle Configuration Modal -->
+    <div *ngIf="idleConfigModal.isOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-96 shadow-xl">
+            <!-- Modal Header -->
+            <div class="bg-teal-400 text-white px-6 py-4 rounded-t-lg">
+                <h3 class="text-lg font-medium text-center">Set Application Group Idle Configuration</h3>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <h4 class="text-lg font-medium text-gray-800">{{ idleConfigModal.applicationGroup?.name }}</h4>
+                </div>
+
+                <!-- Configuration Options -->
+                <div class="space-y-3">
+                    <button (click)="idleConfigModal.selectedConfig = 'Default'"
+                        [class]="idleConfigModal.selectedConfig === 'Default' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+                        <span>Default</span>
+                        <span
+                            class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+                    </button>
+
+                    <button (click)="idleConfigModal.selectedConfig = 'No Idle Time'"
+                        [class]="idleConfigModal.selectedConfig === 'No Idle Time' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+                        <span>No Idle Time</span>
+                        <span
+                            class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+                    </button>
+
+                    <button (click)="idleConfigModal.selectedConfig = 'Custom'"
+                        [class]="idleConfigModal.selectedConfig === 'Custom' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+                        class="w-full px-4 py-3 rounded-lg font-medium transition-colors">
+                        <span>Custom</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 pb-6 flex justify-center space-x-4">
+                <button (click)="closeIdleConfigModal()"
+                    class="px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-medium flex items-center space-x-2">
+                    <span>✕</span>
+                    <span>Cancel</span>
+                </button>
+                <button (click)="updateIdleConfiguration()"
+                    class="px-6 py-2 bg-teal-400 text-white rounded hover:bg-teal-500 font-medium flex items-center space-x-2">
+                    <span>✓</span>
+                    <span>Update</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Group Modal -->
+    <div *ngIf="showEditGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-96">
+            <h3 class="text-lg font-medium mb-4">Edit Custom Group</h3>
+            <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
+                class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-400 focus:border-teal-400">
+            <div class="flex justify-end space-x-2">
+                <button (click)="closeEditGroupModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                    Cancel
+                </button>
+                <button (click)="updateCustomGroup()"
+                    class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Group Modal -->
+    <div *ngIf="showAddGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-96">
+            <h3 class="text-lg font-medium mb-4">Add Custom Group</h3>
+            <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
+                class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+            <div class="flex justify-end space-x-2">
+                <button (click)="showAddGroupModal = false; newGroupName = ''"
+                    class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                    Cancel
+                </button>
+                <button (click)="addCustomGroup()" class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Button
+      <button class="fixed bottom-6 right-6 w-12 h-12 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 flex items-center justify-center">
+        ❓
+      </button> -->
+</div>
+<router-outlet />
