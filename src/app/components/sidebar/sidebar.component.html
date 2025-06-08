@@ -1,0 +1,14 @@
+<aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
+      <nav class="p-4 space-y-2">
+        <button 
+          *ngFor="let item of items; trackBy: trackByLabel" 
+          class="w-full flex items-center space-x-3 px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+          [class.bg-teal-50]="item.active"
+          [class.text-teal-600]="item.active"
+          (click)="onItemClick(item)"
+        >
+          <i [class]="item.icon"></i>
+          <span class="text-sm">{{ item.label }}</span>
+        </button>
+      </nav>
+    </aside>

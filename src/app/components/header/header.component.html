@@ -1,0 +1,35 @@
+<header class="bg-white border-b border-gray-200 px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-clock text-white text-lg"></i>
+            </div>
+            <span class="text-xl font-semibold text-gray-800">{{ appName }}</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-6">
+          <button class="text-gray-600 hover:text-gray-800 transition-colors">
+            <span class="text-sm">Customer Success</span>
+          </button>
+          <button class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
+            <i class="fas fa-download"></i>
+            <span class="text-sm">Download Agent</span>
+          </button>
+          <button class="text-gray-600 hover:text-gray-800 transition-colors">
+            <i class="fas fa-cog"></i>
+          </button>
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+              <span class="text-sm font-medium text-gray-600">{{ user.name.charAt(0) }}</span>
+            </div>
+            <div class="text-sm">
+              <div class="font-medium text-gray-800">{{ user.name }}</div>
+              <div class="text-gray-500">{{ user.email }}</div>
+            </div>
+            <i class="fas fa-chevron-down text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+    </header>

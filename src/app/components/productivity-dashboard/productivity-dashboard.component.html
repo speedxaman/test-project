@@ -1,0 +1,322 @@
+<div class="min-h-screen bg-gray-50 flex">
+  <!-- Collapsible Sidebar -->
+  <aside
+    class="bg-white border-r border-gray-200 transition-all duration-300 ease-in-out group hover:w-64 w-16 flex-shrink-0"
+    (mouseenter)="sidebarHovered = true" (mouseleave)="sidebarHovered = false">
+    <!-- RescueTime Logo -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-clock text-white text-sm"></i>
+        </div>
+        <span class="text-lg font-semibold text-gray-800 whitespace-nowrap transition-opacity duration-300"
+          [class.opacity-0]="!sidebarHovered" [class.opacity-100]="sidebarHovered">
+          RescueTime
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="p-2 space-y-1">
+      <button *ngFor="let item of sidebarItems"
+        class="w-full flex items-center px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200 group/item"
+        [class.bg-teal-50]="item.active" [class.text-teal-600]="item.active" [class.border-r-2]="item.active"
+        [class.border-teal-500]="item.active" (click)="setActiveSidebarItem(item.id)">
+        <i [class]="item.icon + ' text-lg flex-shrink-0'"></i>
+        <span class="ml-3 text-sm whitespace-nowrap transition-opacity duration-300" [class.opacity-0]="!sidebarHovered"
+          [class.opacity-100]="sidebarHovered">
+          {{ item.label }}
+        </span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4">
+      <div class="flex items-center justify-end space-x-6">
+        <button class="text-gray-600 hover:text-gray-800 transition-colors">
+          <span class="text-sm">Customer Success</span>
+        </button>
+        <button class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
+          <i class="fas fa-download"></i>
+          <span class="text-sm">Download Agent</span>
+        </button>
+        <button class="text-gray-600 hover:text-gray-800 transition-colors">
+          <i class="fas fa-cog"></i>
+        </button>
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+            <span class="text-sm font-medium text-gray-600">{{ currentUser.name.charAt(0) }}</span>
+          </div>
+          <div class="text-sm">
+            <div class="font-medium text-gray-800">{{ currentUser.name }}</div>
+            <div class="text-gray-500">{{ currentUser.email }}</div>
+          </div>
+          <i class="fas fa-chevron-down text-gray-400"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <div class="bg-white border-b border-gray-200 px-6">
+      <div class="flex space-x-8">
+        <button *ngFor="let tab of mainTabs"
+          class="pb-4 pt-6 px-1 text-sm font-medium border-b-2 transition-colors flex items-center"
+          [class.border-teal-500]="tab.active" [class.text-teal-600]="tab.active"
+          [class.border-transparent]="!tab.active" [class.text-gray-500]="!tab.active" (click)="setActiveTab(tab.id)">
+          <i [class]="tab.icon + ' mr-2'"></i>
+          {{ tab.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub Navigation -->
+    <div class="bg-white border-b border-gray-200 px-6">
+      <div class="flex space-x-8">
+        <button *ngFor="let subtab of subTabs" class="pb-3 pt-4 px-1 text-sm font-medium border-b-2 transition-colors"
+          [class.border-teal-500]="subtab.active" [class.text-teal-600]="subtab.active"
+          [class.border-transparent]="!subtab.active" [class.text-gray-500]="!subtab.active"
+          (click)="setActiveSubTab(subtab.id)">
+          {{ subtab.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="flex-1 flex">
+      <!-- Left Panel -->
+      <div class="w-80 bg-white border-r border-gray-200 p-4">
+        <!-- Search Input -->
+        <div class="flex mb-4 border border-gray-300 rounded-lg overflow-hidden">
+
+          <!-- Search Icon and Input -->
+          <div class="relative flex-1">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" placeholder="Search"
+              class="w-full pl-10 pr-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+              [(ngModel)]="searchTerm">
+          </div>
+
+          <!-- Add Button inside box (no border radius on left) -->
+          <button
+            class="bg-teal-500 text-white px-4 flex items-center justify-center hover:bg-teal-600 transition-colors"
+            (click)="onAddApplicationGroup();">
+            <i class="fas fa-plus text-lg"></i>
+          </button>
+        </div>
+
+
+
+        <!-- Default Section -->
+        <div class="mb-4">
+          <div class="flex items-center text-sm text-gray-600 mb-2">
+            <span class="bg-gray-100 px-2 py-1 rounded text-teal-600 font-medium">Default</span>
+            <i class="fas fa-info-circle ml-2 text-gray-400"></i>
+          </div>
+          @if (!this.searchTerm) {
+          <div *ngFor="let group of customGroups"
+            class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+            <span class="text-sm text-gray-700">{{ group.name }}</span>
+            <div class="flex space-x-2">
+              <button (click)="editCustomGroup(group)" class="text-gray-600 "><i
+                  class="fas fa-edit hover:text-teal-500"></i></button>
+              <button (click)="deleteCustomGroup(group.id)" class="text-gray-600 "><i
+                  class="fas fa-trash hover:text-teal-500"></i></button>
+            </div>
+          </div>
+          }
+          @if (this.searchTerm) {
+          <div *ngFor="let group of filteredCustomGroups"
+            class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+            <span class="text-sm text-gray-700">{{ group.name }}</span>
+            <div class="flex space-x-2">
+              <button (click)="editCustomGroup(group)" class="text-gray-600 "><i
+                  class="fas fa-edit hover:text-teal-500"></i></button>
+              <button (click)="deleteCustomGroup(group.id)" class="text-gray-600 "><i
+                  class="fas fa-trash hover:text-teal-500"></i></button>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Items List -->
+      </div>
+
+      <!-- Main Table Area -->
+      <div class="flex-1 flex flex-col">
+        <!-- Table Navigation -->
+        <div class="bg-white border-b border-gray-200">
+          <div class="flex space-x-8 px-6">
+            <button *ngFor="let tab of tableTabs"
+              class="pb-3 pt-4 px-1 text-sm font-medium border-b-2 transition-colors"
+              [class.border-teal-500]="tab.active" [class.text-teal-600]="tab.active"
+              [class.border-transparent]="!tab.active" [class.text-gray-500]="!tab.active"
+              (click)="setActiveTableTab(tab.id)">
+              {{ tab.label }}
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- Search Bar -->
+
+
+        <!-- Table -->
+        <div class="flex-1 bg-white overflow-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 sticky top-0">
+
+
+
+              <tr>
+                <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                  Application Group
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                  Idle Time Configuration
+                </th>
+                <th colspan="2" class="px-6 py-4">
+                  <div class="flex justify-end w-full">
+                    <input type="text" placeholder="Search"
+                      class="pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-transparent"
+                      [(ngModel)]="globalSearchTerm">
+                  </div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let group of filteredApplicationGroups; trackBy: trackByName" class="hover:bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {{ group.name }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 group relative">
+                  {{ group.idleTimeConfiguration }}
+                  <button (click)="openIdleConfigModal(group)"
+                    class="absolute space-x-2 ml-2 hidden group-hover:inline-block text-teal-400 hover:text-teal-600 transition-colors">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-center">
+                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors"
+                    [class.bg-green-500]="group.isProductive" [class.text-white]="group.isProductive"
+                    [class.hover:bg-green-600]="group.isProductive" [class.bg-gray-200]="!group.isProductive"
+                    [class.text-gray-700]="!group.isProductive" [class.hover:bg-gray-300]="!group.isProductive"
+                    (click)="toggleProductivity(group, true)">
+                    PRODUCTIVE
+                  </button>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-center">
+                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors"
+                    [class.bg-orange-500]="!group.isProductive" [class.text-white]="!group.isProductive"
+                    [class.hover:bg-orange-600]="!group.isProductive" [class.bg-gray-200]="group.isProductive"
+                    [class.text-gray-700]="group.isProductive" [class.hover:bg-gray-300]="group.isProductive"
+                    (click)="toggleProductivity(group, false)">
+                    NON-PRODUCTIVE
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showAddGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96">
+      <h3 class="text-lg font-medium mb-4">Add Custom Group</h3>
+      <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
+        class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+      <div class="flex justify-end space-x-2">
+        <button (click)="showAddGroupModal = false; newGroupName = ''"
+          class="px-4 py-2 text-gray-600 hover:text-gray-800">
+          Cancel
+        </button>
+        <button (click)="addCustomGroup()" class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showEditGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96">
+      <h3 class="text-lg font-medium mb-4">Edit Custom Group</h3>
+      <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
+        class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-400 focus:border-teal-400">
+      <div class="flex justify-end space-x-2">
+        <button (click)="closeEditGroupModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+          Cancel
+        </button>
+        <button (click)="updateCustomGroup()" class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="idleConfigModal.isOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg w-96 shadow-xl">
+      <!-- Modal Header -->
+      <div class="bg-teal-400 text-white px-6 py-4 rounded-t-lg">
+        <h3 class="text-lg font-medium text-center">Set Application Group Idle Configuration</h3>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6">
+        <div class="text-center mb-6">
+          <h4 class="text-lg font-medium text-gray-800">{{ idleConfigModal.applicationGroup?.name }}</h4>
+        </div>
+
+        <!-- Configuration Options -->
+        <div class="space-y-3">
+          <button (click)="idleConfigModal.selectedConfig = 'Default'"
+            [class]="idleConfigModal.selectedConfig === 'Default' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+            <span>Default</span>
+            <span class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+          </button>
+
+          <button (click)="idleConfigModal.selectedConfig = 'No Idle Time'"
+            [class]="idleConfigModal.selectedConfig === 'No Idle Time' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+            <span>No Idle Time</span>
+            <span class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+          </button>
+
+          <button (click)="idleConfigModal.selectedConfig = 'Custom'"
+            [class]="idleConfigModal.selectedConfig === 'Custom' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="w-full px-4 py-3 rounded-lg font-medium transition-colors">
+            <span>Custom</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 pb-6 flex justify-center space-x-4">
+        <button (click)="closeIdleConfigModal()"
+          class="px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-medium flex items-center space-x-2">
+          <span>✕</span>
+          <span>Cancel</span>
+        </button>
+        <button (click)="updateIdleConfiguration()"
+          class="px-6 py-2 bg-teal-400 text-white rounded hover:bg-teal-500 font-medium flex items-center space-x-2">
+          <span>✓</span>
+          <span>Update</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Button -->
+  <button
+    class="fixed bottom-6 right-6 bg-red-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-red-600 transition-colors flex items-center">
+    <i class="fas fa-question-circle mr-2"></i>
+    <span class="text-sm font-medium">Help</span>
+  </button>
+</div>
