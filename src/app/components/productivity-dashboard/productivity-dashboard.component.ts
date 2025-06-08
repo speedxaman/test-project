@@ -70,6 +70,11 @@ export class ProductivityDashboardComponent implements OnInit {
     { id: 'users', label: 'Users', active: false }
   ];
 
+  customGroups: CustomGroup[] = [
+    { id: 1, name: 'kuuukjy' },
+    { id: 2, name: 'abc' }
+  ];
+
   applicationGroups: ApplicationGroup[] = [];
 
   constructor(private productivityService: ProductivityService) { }
@@ -98,10 +103,6 @@ export class ProductivityDashboardComponent implements OnInit {
     this.loadApplicationGroups();
   }
 
-  customGroups: CustomGroup[] = [
-    { id: 1, name: 'kuuukjy' },
-    { id: 2, name: 'abc' }
-  ];
 
   addCustomGroup() {
     if (this.newGroupName.trim()) {
@@ -132,9 +133,14 @@ export class ProductivityDashboardComponent implements OnInit {
   setActiveSubTab(subtabId: string): void {
     this.subTabs.forEach(tab => tab.active = tab.id === subtabId);
   }
-
+  groupTab = true;
+  teamTab = false;
+  usersTabs = false;
   setActiveTableTab(tabId: string): void {
     this.tableTabs.forEach(tab => tab.active = tab.id === tabId);
+    tabId == 'groups' ? this.groupTab = true: this.groupTab = false;
+    tabId == 'teams' ? this.teamTab = true: this.teamTab = false;
+    tabId == 'users' ? this.usersTabs = true: this.usersTabs = false;
   }
 
 
