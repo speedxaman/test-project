@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
+
 export class DataTableComponent {
 
   @Input() data: ApplicationGroup[] = [];

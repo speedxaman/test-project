@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './mapping.component.html',
   styleUrl: './mapping.component.scss'
 })
+
 export class MappingComponent {
   searchTerm: string = '';
   selectedIsApp: string = 'Show All';

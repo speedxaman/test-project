@@ -8,6 +8,7 @@ interface ApplicationGroup {
   categoryName: string;
   priority: string;
 }
+
 @Component({
   selector: 'app-application-group',
   standalone: true,

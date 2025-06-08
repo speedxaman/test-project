@@ -9,6 +9,7 @@ import { SidebarItem } from '../models';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
+
 export class SidebarComponent {
   @Input() sidebarHovered = false;
   @Input() sidebarItems : any = [];

@@ -6,6 +6,7 @@ import { ApplicationGroup } from '../models';
   providedIn: 'root'
 })
 export class ProductivityService {
+  
   private applicationGroups: ApplicationGroup[] = [
     { id: 1, name: 'Education', idleTimeConfiguration: 'No Idle Time', isProductive: false },
     { id: 2, name: 'Email', idleTimeConfiguration: 'Default', isProductive: true },
