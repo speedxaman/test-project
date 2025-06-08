@@ -19,7 +19,6 @@ export class ApplicationGroupComponent {
 searchTerm: string = '';
   isToggleEnabled: boolean = false;
 
-  // Sample data matching your image
   applicationGroups: ApplicationGroup[] = [
     { applicationGroup: 'Education', categoryName: 'Uncategorized', priority: '' },
     { applicationGroup: 'Email', categoryName: 'Uncategorized', priority: '' },
@@ -44,29 +43,24 @@ searchTerm: string = '';
     );
   }
 
-  // Track by function for better performance
+  
   trackByFn(index: number, item: ApplicationGroup): string {
     return item.applicationGroup;
   }
 
-  // Action methods
   toggleSignatureMatching(): void {
     console.log('Signature Matching toggled');
-    // Implement your signature matching logic here
   }
 
   addGroup(): void {
     console.log('Add Group clicked');
-    // Implement your add group logic here
   }
 
   editItem(item: ApplicationGroup): void {
     console.log('Edit item:', item);
-    // Implement your edit logic here
   }
 
   downloadItem(item: ApplicationGroup): void {
     console.log('Download item:', item);
-    // Implement your download logic here
   }
 }

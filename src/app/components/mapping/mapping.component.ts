@@ -18,17 +18,14 @@ export class MappingComponent {
 
   addGroup() {
     console.log('Add Group clicked');
-    // Implement your add group logic here
   }
 
   addNewRule() {
     console.log('Add New Rule clicked');
-    // Implement your add new rule logic here
   }
 
   showMoreOptions() {
     console.log('More options clicked');
-    // Implement your more options logic here
   }
 
 }
