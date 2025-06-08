@@ -1,14 +1,40 @@
-<aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
-      <nav class="p-4 space-y-2">
-        <button 
-          *ngFor="let item of items; trackBy: trackByLabel" 
-          class="w-full flex items-center space-x-3 px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-          [class.bg-teal-50]="item.active"
-          [class.text-teal-600]="item.active"
-          (click)="onItemClick(item)"
-        >
-          <i [class]="item.icon"></i>
-          <span class="text-sm">{{ item.label }}</span>
-        </button>
-      </nav>
-    </aside>
+<!-- <aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
+  <nav class="p-4 space-y-2">
+    <button *ngFor="let item of items; trackBy: trackByLabel"
+      class="w-full flex items-center space-x-3 px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+      [class.bg-teal-50]="item.active" [class.text-teal-600]="item.active" (click)="onItemClick(item)">
+      <i [class]="item.icon"></i>
+      <span class="text-sm">{{ item.label }}</span>
+    </button>
+  </nav>
+</aside> -->
+<aside
+    class="bg-white border-r border-gray-200 transition-all duration-300 ease-in-out group hover:w-64 w-16 flex-shrink-0"
+    (mouseenter)="sidebarHovered = true" (mouseleave)="sidebarHovered = false">
+    <!-- RescueTime Logo -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-clock text-white text-sm"></i>
+        </div>
+        <span class="text-lg font-semibold text-gray-800 whitespace-nowrap transition-opacity duration-300"
+          [class.opacity-0]="!sidebarHovered" [class.opacity-100]="sidebarHovered">
+          RescueTime
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="p-2 space-y-1">
+      <button *ngFor="let item of sidebarItems"
+        class="w-full flex items-center px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200 group/item"
+        [class.bg-teal-50]="item.active" [class.text-teal-600]="item.active" [class.border-r-2]="item.active"
+        [class.border-teal-500]="item.active" (click)="setActiveSidebarItem(item.id)">
+        <i [class]="item.icon + ' text-lg flex-shrink-0'"></i>
+        <span class="ml-3 text-sm whitespace-nowrap transition-opacity duration-300" [class.opacity-0]="!sidebarHovered"
+          [class.opacity-100]="sidebarHovered">
+          {{ item.label }}
+        </span>
+      </button>
+    </nav>
+  </aside>

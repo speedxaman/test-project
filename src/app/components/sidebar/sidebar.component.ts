@@ -10,15 +10,21 @@ import { SidebarItem } from '../models';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  @Input() items: SidebarItem[] = [];
-  @Output() itemSelected = new EventEmitter<SidebarItem>();
+  @Input() sidebarHovered = false;
+  @Input() sidebarItems : any = [];
+  @Input() clickedItem: any;
+  @Output() sidebarItemsUpdated = new EventEmitter<SidebarItem>();
 
   onItemClick(item: SidebarItem): void {
-    this.itemSelected.emit(item);
+
   }
 
   trackByLabel(index: number, item: SidebarItem): string {
     return item.label;
+  }
+
+  setActiveSidebarItem(item: any) {
+    this.sidebarItemsUpdated.emit(item);
   }
 
 }

@@ -1,63 +1,11 @@
 <div class="min-h-screen bg-gray-50 flex">
   <!-- Collapsible Sidebar -->
-  <aside
-    class="bg-white border-r border-gray-200 transition-all duration-300 ease-in-out group hover:w-64 w-16 flex-shrink-0"
-    (mouseenter)="sidebarHovered = true" (mouseleave)="sidebarHovered = false">
-    <!-- RescueTime Logo -->
-    <div class="p-4 border-b border-gray-200">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
-          <i class="fas fa-clock text-white text-sm"></i>
-        </div>
-        <span class="text-lg font-semibold text-gray-800 whitespace-nowrap transition-opacity duration-300"
-          [class.opacity-0]="!sidebarHovered" [class.opacity-100]="sidebarHovered">
-          RescueTime
-        </span>
-      </div>
-    </div>
-
-    <!-- Navigation Items -->
-    <nav class="p-2 space-y-1">
-      <button *ngFor="let item of sidebarItems"
-        class="w-full flex items-center px-3 py-2 text-left text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200 group/item"
-        [class.bg-teal-50]="item.active" [class.text-teal-600]="item.active" [class.border-r-2]="item.active"
-        [class.border-teal-500]="item.active" (click)="setActiveSidebarItem(item.id)">
-        <i [class]="item.icon + ' text-lg flex-shrink-0'"></i>
-        <span class="ml-3 text-sm whitespace-nowrap transition-opacity duration-300" [class.opacity-0]="!sidebarHovered"
-          [class.opacity-100]="sidebarHovered">
-          {{ item.label }}
-        </span>
-      </button>
-    </nav>
-  </aside>
+  <app-sidebar [sidebarItems]="sidebarItems1" (sidebarItemsUpdated)="sideBarClicked($event)" [clickedItem]="sidebarCurr"></app-sidebar>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 px-6 py-4">
-      <div class="flex items-center justify-end space-x-6">
-        <button class="text-gray-600 hover:text-gray-800 transition-colors">
-          <span class="text-sm">Customer Success</span>
-        </button>
-        <button class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
-          <i class="fas fa-download"></i>
-          <span class="text-sm">Download Agent</span>
-        </button>
-        <button class="text-gray-600 hover:text-gray-800 transition-colors">
-          <i class="fas fa-cog"></i>
-        </button>
-        <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <span class="text-sm font-medium text-gray-600">{{ currentUser.name.charAt(0) }}</span>
-          </div>
-          <div class="text-sm">
-            <div class="font-medium text-gray-800">{{ currentUser.name }}</div>
-            <div class="text-gray-500">{{ currentUser.email }}</div>
-          </div>
-          <i class="fas fa-chevron-down text-gray-400"></i>
-        </div>
-      </div>
-    </header>
+    <app-header></app-header>
 
     <!-- Main Navigation Tabs -->
     <div class="bg-white border-b border-gray-200 px-6">
@@ -111,9 +59,9 @@
 
         <!-- Default Section -->
         <div class="mb-4">
-          <div class="flex items-center text-sm text-gray-600 mb-2">
-            <span class="bg-gray-100 px-2 py-1 rounded text-teal-600 font-medium">Default</span>
-            <i class="fas fa-info-circle ml-2 text-gray-400"></i>
+          <div class="flex items-center text-sm text-gray-600 pt-2 pb-2 bg-gray-100 border-t border-b border-gray-300">
+            <span class="px-2 py-1 rounded text-teal-600 font-bold">Default</span>
+            <i class="fas fa-info-circle ml-2 text-teal-600"></i>
           </div>
           @if (!this.searchTerm) {
           <div *ngFor="let group of customGroups"
@@ -156,64 +104,59 @@
               (click)="setActiveTableTab(tab.id)">
               {{ tab.label }}
             </button>
-
           </div>
-
         </div>
-
-        <!-- Search Bar -->
-
-
         <!-- Table -->
         <div class="flex-1 bg-white overflow-auto">
           <table class="w-full">
             <thead class="bg-gray-50 sticky top-0">
-
-
-
               <tr>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                <th class="px-6 py-2 text-left text-sm font-medium text-gray-900">
                   Application Group
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                <th class="px-6 py-2 text-left text-sm font-medium text-gray-900">
                   Idle Time Configuration
                 </th>
-                <th colspan="2" class="px-6 py-4">
+                <th colspan="2" class="px-6 py-2">
                   <div class="flex justify-end w-full">
                     <input type="text" placeholder="Search"
-                      class="pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-transparent"
+                      class="pl-2 pr-2 py-2 border border-gray-400 rounded-lg focus:ring-teal-500 focus:border-transparent placeholder:font-normal text-sm"
                       [(ngModel)]="globalSearchTerm">
                   </div>
                 </th>
               </tr>
             </thead>
 
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white divide-y divide-gray-300">
               <tr *ngFor="let group of filteredApplicationGroups; trackBy: trackByName" class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td class="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                   {{ group.name }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 group relative">
+                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700 group relative">
                   {{ group.idleTimeConfiguration }}
                   <button (click)="openIdleConfigModal(group)"
                     class="absolute space-x-2 ml-2 hidden group-hover:inline-block text-teal-400 hover:text-teal-600 transition-colors">
                     <i class="fas fa-edit"></i>
                   </button>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-center">
-                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors"
+                <td class="px-6 py-2 whitespace-nowrap text-center">
+                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors border border-gray-400"
                     [class.bg-green-500]="group.isProductive" [class.text-white]="group.isProductive"
-                    [class.hover:bg-green-600]="group.isProductive" [class.bg-gray-200]="!group.isProductive"
-                    [class.text-gray-700]="!group.isProductive" [class.hover:bg-gray-300]="!group.isProductive"
+                    
+                    [class.hover:text-green-600]="!group.isProductive"
+                    [class.hover:border-green-600]="!group.isProductive"
+                    [class.text-gray-700]="!group.isProductive"  
                     (click)="toggleProductivity(group, true)">
                     PRODUCTIVE
                   </button>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-center">
-                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors"
-                    [class.bg-orange-500]="!group.isProductive" [class.text-white]="!group.isProductive"
-                    [class.hover:bg-orange-600]="!group.isProductive" [class.bg-gray-200]="group.isProductive"
-                    [class.text-gray-700]="group.isProductive" [class.hover:bg-gray-300]="group.isProductive"
+                <td class="px-6 py-2 whitespace-nowrap text-center">
+                  <button class="px-4 py-2 text-xs font-semibold rounded transition-colors border border-gray-400"
+                    [class.bg-[#ffa500]]="!group.isProductive" [class.text-white]="!group.isProductive"
+                    [class.hover:bg-[#ffa500]]="!group.isProductive" 
+                    [class.text-gray-700]="group.isProductive" 
+                    [class.hover:border-[#ffa500]]="group.isProductive"
+                    [class.hover:text-[#ffa500]]="group.isProductive"
                     (click)="toggleProductivity(group, false)">
                     NON-PRODUCTIVE
                   </button>

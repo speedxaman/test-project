@@ -23,10 +23,7 @@ export class ProductivityDashboardComponent implements OnInit {
   newGroupName = '';
   showEditGroupModal = false;
   editingGroup: CustomGroup | null = null;
-  currentUser: User = {
-    name: 'btrak',
-    email: 'btrak10039-qa@gmail.com'
-  };
+  
 
   idleConfigModal: IdleConfigModal = {
     isOpen: false,
@@ -34,7 +31,7 @@ export class ProductivityDashboardComponent implements OnInit {
     selectedConfig: 'Default'
   };
 
-  sidebarItems: SidebarItem[] = [
+  sidebarItems1: SidebarItem[] = [
     { id: 'dashboard', icon: 'fas fa-chart-line', label: 'Dashboard', active: false },
     { id: 'reports', icon: 'fas fa-chart-bar', label: 'Reports', active: true },
     { id: 'applications', icon: 'fas fa-desktop', label: 'Applications', active: false },
@@ -125,7 +122,7 @@ export class ProductivityDashboardComponent implements OnInit {
   }
 
   setActiveSidebarItem(itemId: string): void {
-    this.sidebarItems.forEach(item => item.active = item.id === itemId);
+    this.sidebarItems1.forEach(item => item.active = item.id === itemId);
   }
 
   setActiveTab(tabId: string): void {
@@ -185,6 +182,11 @@ export class ProductivityDashboardComponent implements OnInit {
   onAddApplicationGroup(): void {
     this.showAddGroupModal = true
     console.log('Add new application group');
+  }
+  sidebarCurr:any;
+  sideBarClicked(item: any){
+    console.log(item);
+    this.sidebarCurr = item;
   }
 
   toggleProductivity(group: ApplicationGroup, isProductive: boolean): void {

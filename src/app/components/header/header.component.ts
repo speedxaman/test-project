@@ -13,4 +13,9 @@ export class HeaderComponent {
   @Input() appName = 'RescueTime';
   @Input() user!: User;
 
+  currentUser: User = {
+    name: 'btrak',
+    email: 'btrak10039-qa@gmail.com'
+  };
+
 }
