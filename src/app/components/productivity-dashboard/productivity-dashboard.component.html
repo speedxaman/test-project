@@ -234,7 +234,7 @@
   </div>
 
   <div *ngIf="showAddGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-96">
+    <div class="bg-white p-6 w-96">
       <h3 class="text-lg font-medium mb-4">Add Custom Group</h3>
       <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
         class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
@@ -252,7 +252,7 @@
 
   <div *ngIf="showEditGroupModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-start z-50 ps-10">
-    <div class="bg-white rounded-lg p-6 w-96">
+    <div class="bg-white  p-6 w-96">
       <h3 class="text-lg font-medium mb-4">Edit Custom Group</h3>
       <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
         class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-400 focus:border-teal-400">
@@ -269,7 +269,7 @@
 
   <div *ngIf="idleConfigModal.isOpen"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg w-96 shadow-xl">
+    <div class="bg-white w-96 shadow-xl">
       <!-- Modal Header -->
       <div class="bg-teal-400 text-white px-6 py-4 rounded-t-lg">
         <h3 class="text-lg font-medium text-center">Set Application Group Idle Configuration</h3>
