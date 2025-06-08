@@ -6,12 +6,14 @@ import { DataTableComponent } from '../data-table/data-table.component';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ProductivityService } from '../services/productivity.service';
+import { MappingComponent } from "../mapping/mapping.component";
+import { ApplicationGroupComponent } from "../application-group/application-group.component";
 
 
 @Component({
   selector: 'app-productivity-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, SidebarComponent, DataTableComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, SidebarComponent, DataTableComponent, MappingComponent, ApplicationGroupComponent],
   templateUrl: './productivity-dashboard.component.html',
   styleUrl: './productivity-dashboard.component.scss'
 })
@@ -23,7 +25,12 @@ export class ProductivityDashboardComponent implements OnInit {
   newGroupName = '';
   showEditGroupModal = false;
   editingGroup: CustomGroup | null = null;
-  
+  mappingTab = false;
+  subGroupTab = false;
+  productivityTab = true;
+    groupTab = true;
+  teamTab = false;
+  usersTabs = false;
 
   idleConfigModal: IdleConfigModal = {
     isOpen: false,
@@ -124,19 +131,23 @@ export class ProductivityDashboardComponent implements OnInit {
 
   setActiveSidebarItem(itemId: string): void {
     this.sidebarItems1.forEach(item => item.active = item.id === itemId);
-    
+
   }
 
   setActiveTab(tabId: string): void {
     this.mainTabs.forEach(tab => tab.active = tab.id === tabId);
   }
-
+  
   setActiveSubTab(subtabId: string): void {
+    console.log(subtabId);
+    
     this.subTabs.forEach(tab => tab.active = tab.id === subtabId);
+    subtabId == 'groups' ? this.subGroupTab = true: this.subGroupTab = false;
+    subtabId == 'mapping' ? this.mappingTab = true: this.mappingTab = false;
+    subtabId == 'profile' ? this.productivityTab = true: this.productivityTab = false;
   }
-  groupTab = true;
-  teamTab = false;
-  usersTabs = false;
+
+
   setActiveTableTab(tabId: string): void {
     this.tableTabs.forEach(tab => tab.active = tab.id === tabId);
     tabId == 'groups' ? this.groupTab = true: this.groupTab = false;

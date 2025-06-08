@@ -1,5 +1,5 @@
 <div class="min-h-screen bg-gray-50 flex">
-  <!-- Collapsible Sidebar -->
+  <!-- Sidebar -->
   <app-sidebar [sidebarItems]="sidebarItems1" (sidebarItemsUpdated)="sideBarClicked($event)"
     [clickedItem]="sidebarCurr"></app-sidebar>
 
@@ -34,7 +34,11 @@
     </div>
 
     <!-- Content Area -->
-    <div class="flex-1 flex">
+     @if (mappingTab) {
+      <app-mapping></app-mapping>
+     }
+     @if (productivityTab) {
+      <div class="flex-1 flex">
       <!-- Left Panel -->
       <div class="w-80 bg-white border-r border-gray-200 p-4">
         <!-- Search Input -->
@@ -231,6 +235,11 @@
 
       </div>
     </div>
+     }
+     @if (subGroupTab) {
+      <app-application-group></app-application-group>
+     }
+    
   </div>
 
   <div *ngIf="showAddGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

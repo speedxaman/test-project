@@ -1,0 +1,39 @@
+select {
+    background-image: none;
+    border-width: 1px;
+    white-space: pre-line;
+}
+
+/* Custom option styling */
+select option {
+    white-space: pre-line;
+    line-height: 1.4;
+    padding: 8px;
+}
+
+/* Focus states */
+.focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+}
+
+.isapp{
+    margin-left: 20px;
+    position: absolute;
+    top: -10px;
+    background-color: #ffff;
+    font-size: 11px;
+    
+}
+
+.width{
+    width: 150px;
+    border-radius: 4px;
+}
+
+.margin{
+    margin-left: -28px;
+}
+
+.margin-left{
+    margin-left: -100px;
+}

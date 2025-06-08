@@ -1,0 +1,14 @@
+ /* Custom toggle switch styling */
+    .peer:checked ~ div {
+      background-color: #14B8A6;
+    }
+    
+    /* Hover effects */
+    .hover\\:bg-gray-50:hover {
+      background-color: #f9fafb;
+    }
+    
+    /* Focus styles */
+    input:focus {
+      box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+    }

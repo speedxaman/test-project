@@ -237,7 +237,8 @@ module.exports = {
         'sidebar':'17.5rem',
         '4.5':'1.125rem',
         '5.5':'1.375rem',
-        '6.5':'1.625rem'
+        '6.5':'1.625rem',
+        '15':'10rem'
       },
       padding:{
         'nav':'17.5rem',
