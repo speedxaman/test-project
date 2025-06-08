@@ -124,6 +124,7 @@ export class ProductivityDashboardComponent implements OnInit {
 
   setActiveSidebarItem(itemId: string): void {
     this.sidebarItems1.forEach(item => item.active = item.id === itemId);
+    
   }
 
   setActiveTab(tabId: string): void {
