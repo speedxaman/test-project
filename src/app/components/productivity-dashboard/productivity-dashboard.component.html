@@ -54,9 +54,9 @@
 
           <!-- Add Button inside box (no border radius on left) -->
           <button
-            class="bg-teal-500 text-white px-4 flex items-center justify-center hover:bg-teal-600 transition-colors"
+            class="bg-[#4cb2b2] text-white px-4 flex items-center justify-center hover:bg-[#4cb2b2] transition-colors"
             (click)="onAddApplicationGroup();">
-            <i class="fas fa-plus text-lg"></i>
+            <i class="fas fa-plus text-sm"></i>
           </button>
         </div>
 
@@ -126,7 +126,7 @@
                 <th colspan="2" class="px-6 py-2">
                   <div class="flex justify-end w-full">
                     <input type="text" placeholder="Search"
-                      class="pl-2 pr-2 py-2 border border-gray-400 rounded-lg focus:ring-teal-500 focus:border-transparent placeholder:font-normal text-sm"
+                      class="pl-2 pr-2 py-1 border border-gray-400 rounded-sm focus:ring-teal-500 focus:border-transparent placeholder:font-normal text-sm"
                       [(ngModel)]="globalSearchTerm">
                   </div>
                 </th>
@@ -140,12 +140,12 @@
                 </td>
                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700 group relative">
                   {{ group.idleTimeConfiguration }}
-                  <button (click)="openIdleConfigModal(group)"
+                  <button (click)="editCustomGroup(group)"
                     class="absolute space-x-2 ml-2 hidden group-hover:inline-block ">
                     <i class="fas fa-edit text-teal-600"></i>
                   </button>
                 </td>
-                <td class="px-6 py-2 whitespace-nowrap text-center">
+                <td class="px-6 py-2 whitespace-nowrap text-end">
                   <button class="px-4 py-2 text-xs font-semibold rounded transition-colors border border-gray-400"
                     [class.bg-green-500]="group.isProductive" [class.text-white]="group.isProductive"
                     [class.hover:text-green-600]="!group.isProductive"
@@ -154,7 +154,7 @@
                     PRODUCTIVE
                   </button>
                 </td>
-                <td class="px-6 py-2 whitespace-nowrap text-center">
+                <td class="px-6 py-2 whitespace-nowrap text-start">
                   <button class="px-4 py-2 text-xs font-semibold rounded transition-colors border border-gray-400"
                     [class.bg-[#ffa500]]="!group.isProductive" [class.text-white]="!group.isProductive"
                     [class.hover:bg-[#ffa500]]="!group.isProductive" [class.text-gray-700]="group.isProductive"
@@ -190,7 +190,7 @@
                 </td>
                 <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 group relative">
 
-                  <button (click)="openIdleConfigModal(group)" class="absolute space-x-2 ml-2 ">
+                  <button (click)="editCustomGroup(group)" class="absolute space-x-2 ml-2 ">
                     <i class="fas fa-edit text-teal-600"></i>
                   </button>
                 </td>
@@ -222,7 +222,7 @@
                 </td>
                 <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 group relative">
 
-                  <button (click)="openIdleConfigModal(group)" class="absolute space-x-2 ml-2 ">
+                  <button (click)="editCustomGroup(group)" class="absolute space-x-2 ml-2 ">
                     <i class="fas fa-edit text-teal-600"></i>
                   </button>
                 </td>
@@ -243,92 +243,139 @@
   </div>
 
   <div *ngIf="showAddGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 w-96">
-      <h3 class="text-lg font-medium mb-4">Add Custom Group</h3>
-      <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
-        class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
-      <div class="flex justify-end space-x-2">
-        <button (click)="showAddGroupModal = false; newGroupName = ''"
-          class="px-4 py-2 text-gray-600 hover:text-gray-800">
-          Cancel
-        </button>
-        <button (click)="addCustomGroup()" class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
-          Add
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="showEditGroupModal"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-start z-50 ps-10">
-    <div class="bg-white  p-6 w-96">
-      <h3 class="text-lg font-medium mb-4">Edit Custom Group</h3>
-      <input type="text" placeholder="Group name" [(ngModel)]="newGroupName"
-        class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-teal-400 focus:border-teal-400">
-      <div class="flex justify-end space-x-2">
-        <button (click)="closeEditGroupModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
-          Cancel
-        </button>
-        <button (click)="updateCustomGroup()" class="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500">
-          Update
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="idleConfigModal.isOpen"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-96 shadow-xl">
+    <div class="bg-white w-96 shadow-xl  overflow-hidden">
       <!-- Modal Header -->
-      <div class="bg-teal-400 text-white px-6 py-4 rounded-t-lg">
-        <h3 class="text-lg font-medium text-center">Set Application Group Idle Configuration</h3>
+      <div class="bg-[#4cb2b2] text-white px-4 py-3">
+        <h3 class="text-sm font-medium text-center">Manage Productivity Profile</h3>
       </div>
 
       <!-- Modal Body -->
-      <div class="p-6">
-        <div class="text-center mb-6">
-          <h4 class="text-lg font-medium text-gray-800">{{ idleConfigModal.applicationGroup?.name }}</h4>
+      <div class="p-4">
+        <!-- Form field with label -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Productivity Profile Name <span class="text-red-500">*</span>
+          </label>
+          <input type="text" 
+                 [(ngModel)]="newGroupName"
+                 class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                 placeholder="Enter profile name">
+        </div>
+        
+        <!-- Action buttons -->
+        <div class="flex justify-center space-x-3">
+          <button (click)="addCustomGroup()" 
+                  class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-medium flex items-center space-x-1 text-sm">
+            <span>+</span>
+            <span>Add</span>
+          </button>
+          
+          <button (click)="showAddGroupModal = false; newGroupName = ''" 
+                  class="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 font-medium flex items-center space-x-1 text-sm">
+            <span>✕</span>
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div *ngIf="showEditGroupModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white shadow-xl w-96 overflow-hidden">
+      <!-- Header with teal background -->
+      <div class="bg-[#4cb2b2] text-white text-center py-3 px-6">
+        <h3 class="text-sm font-medium">Manage Productivity Profile</h3>
+      </div>
+      
+      <!-- Body content -->
+      <div class="p-3">
+        <!-- Form field with label -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Productivity Profile Name <span class="text-red-500">*</span>
+          </label>
+          <input type="text" 
+                 [(ngModel)]="newGroupName"
+                 class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4cb2b2] focus:border-[#4cb2b2] outline-none"
+                 placeholder="Enter profile name">
+        </div>
+        
+        <!-- Action buttons -->
+        <div class="flex justify-center space-x-4">
+          <button (click)="updateCustomGroup()" 
+                  class="px-6 py-2 bg-[#4cb2b2] text-white rounded-sm hover:bg-[#4cb2b2] focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 transition-colors duration-200 flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            Edit
+          </button>
+          
+          <button (click)="closeEditGroupModal()" 
+                  class="px-6 py-2 border border-gray-300 text-gray-700 rounded-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors duration-200 flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div *ngIf="idleConfigModal.isOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-96 shadow-xl  overflow-hidden">
+      <!-- Modal Header -->
+      <div class="bg-[#4cb2b2] text-white px-4 py-3">
+        <h3 class="text-sm font-small text-center">Set Application Group Idle Configuration</h3>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4">
+        <div class="text-center mb-4">
+          <h4 class="text-sm font-medium text-gray-800">abcf</h4>
         </div>
 
         <!-- Configuration Options -->
-        <div class="space-y-3">
+        <div class="flex space-x-2 mb-4">
           <button (click)="idleConfigModal.selectedConfig = 'Default'"
-            [class]="idleConfigModal.selectedConfig === 'Default' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-            class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+            [class]="idleConfigModal.selectedConfig === 'Default' ? 'bg-[#4cb2b2] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="flex-1 flex items-center justify-center px-2 py-2 rounded-full font-normal transition-colors text-xs">
             <span>Default</span>
-            <span class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+            <span class="w-3 h-3 rounded-full border border-current flex items-center justify-center text-xs font-bold ml-1">i</span>
           </button>
 
           <button (click)="idleConfigModal.selectedConfig = 'No Idle Time'"
-            [class]="idleConfigModal.selectedConfig === 'No Idle Time' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-            class="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors">
+            [class]="idleConfigModal.selectedConfig === 'No Idle Time' ? 'bg-[#4cb2b2] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="flex-1 flex items-center justify-center px-2 py-2 rounded-full font-normal transition-colors text-xs">
             <span>No Idle Time</span>
-            <span class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs">?</span>
+            <span class="w-3 h-3 rounded-full border border-current flex items-center justify-center text-xs font-bold ml-1">i</span>
           </button>
 
           <button (click)="idleConfigModal.selectedConfig = 'Custom'"
-            [class]="idleConfigModal.selectedConfig === 'Custom' ? 'bg-teal-400 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-            class="w-full px-4 py-3 rounded-lg font-medium transition-colors">
+            [class]="idleConfigModal.selectedConfig === 'Custom' ? 'bg-[#4cb2b2] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            class="flex-1 px-2 py-2 rounded-full font-normal transition-colors text-xs">
             <span>Custom</span>
           </button>
         </div>
-      </div>
 
-      <!-- Modal Footer -->
-      <div class="px-6 pb-6 flex justify-center space-x-4">
-        <button (click)="closeIdleConfigModal()"
-          class="px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-medium flex items-center space-x-2">
-          <span>✕</span>
-          <span>Cancel</span>
-        </button>
-        <button (click)="updateIdleConfiguration()"
-          class="px-6 py-2 bg-teal-400 text-white rounded hover:bg-teal-500 font-medium flex items-center space-x-2">
-          <span>✓</span>
-          <span>Update</span>
-        </button>
+        <!-- Modal Footer Buttons -->
+        <div class="flex justify-center space-x-3">
+          <button (click)="closeIdleConfigModal()"
+            class="px-4 py-2 bg-gray-200 text-gray-700  hover:bg-gray-300 font-medium flex items-center space-x-1 text-sm">
+            <span>✕</span>
+            <span>Cancel</span>
+          </button>
+          <button (click)="updateIdleConfiguration()"
+            class="px-4 py-2 bg-[#4cb2b2] text-white  bg-[#4cb2b2] font-medium flex items-center space-x-1 text-sm">
+            <span>✓</span>
+            <span>Update</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+</div>
 
   <!-- Help Button -->
   <button
